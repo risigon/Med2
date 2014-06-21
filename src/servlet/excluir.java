@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import util.JPAUtilis;
+import entidades.consulta;
 import entidades.medico;
 import entidades.paciente;
 
@@ -52,6 +53,11 @@ public class excluir extends HttpServlet {
 		case ("excluirmed"):{
 			excluirMedico(id);
 			response.sendRedirect("listarMedicos");
+			break;
+		}
+		case ("excluircon"):{
+			excluirConsulta(id);
+			response.sendRedirect("listarConsulta");
 			break;
 		}
 		}
@@ -102,5 +108,22 @@ public class excluir extends HttpServlet {
 		
 	}
 	
-	
+private static void excluirConsulta(int id){
+		
+		//criar conexao
+		 EntityManager conexao=JPAUtilis.criarManager();
+		 
+		 consulta con = conexao.find(consulta.class, id);
+		 try{
+		 conexao.getTransaction().begin();
+		 conexao.remove(con);
+		 conexao.getTransaction().commit();
+		 } catch(Exception e){
+		 conexao.getTransaction().rollback();	 
+		 }finally{
+		 conexao.close();	 
+		 }
+		 System.out.println("Id Consulta: "+ con.getId()+"Nome: "+con.getPac().getNome()+"Excluido");
+		
+	}
 }

@@ -68,6 +68,14 @@ public class listar extends HttpServlet {
 			listarCon(request, response);
 			break;
 		}
+		case("listarconpacnome"):{
+			listarConPacNome(nome, request, response);
+			break;
+		}
+		case("listarconmednome"):{
+			listarConMedNome(nome, request, response);
+			break;
+		}
 		
 		}
 		
@@ -160,5 +168,40 @@ protected void listarCon(HttpServletRequest request, HttpServletResponse respons
 	
 }
 
+protected void listarConPacNome(String nome, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	
+	EntityManager conexao=JPAUtilis.criarManager();
+	
+	Query q1 = conexao.createQuery("select count(*) from consulta c where c.pac.nome LIKE:nomebusca");
+	q1.setParameter("nomebusca", "%"+nome+"%");
+	List<Integer> qconta = q1.getResultList();
+	request.setAttribute("contador", qconta);
+	
+	Query query = conexao.createQuery("select c From consulta c where c.pac.nome LIKE:nomebusca order by c.pac.nome");
+	query.setParameter("nomebusca", "%"+nome+"%");
+	List<consulta> consultas = query.getResultList();
+	
+	request.setAttribute("conlista", consultas);
+	request.getRequestDispatcher("listarConsulta.jsp").forward(request, response);
+	
+}
+
+protected void listarConMedNome(String nome, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	
+	EntityManager conexao=JPAUtilis.criarManager();
+	
+	Query q1 = conexao.createQuery("select count(*) from consulta c where c.med.nome LIKE:nomebusca");
+	q1.setParameter("nomebusca", "%"+nome+"%");
+	List<Integer> qconta = q1.getResultList();
+	request.setAttribute("contador", qconta);
+	
+	Query query = conexao.createQuery("select c From consulta c where c.med.nome LIKE:nomebusca order by c.med.nome");
+	query.setParameter("nomebusca", "%"+nome+"%");
+	List<consulta> consultas = query.getResultList();
+	
+	request.setAttribute("conlista", consultas);
+	request.getRequestDispatcher("listarConsulta.jsp").forward(request, response);
+	
+}
 
 }

@@ -53,15 +53,24 @@
 <form action="listar" method="post">
 	<table class="tabela2">
 	<tr>
-	<td>Informar Nome:
+	<td>Informar Nome Médico:
 	<input type="text" name="nome" size=50>
-	<input type="hidden" name="opc" value="listarmednome">
+	<input type="hidden" name="opc" value="listarconmednome">
 	<input type="submit" value="Buscar"></td>
 	</tr>
 	</table>
 </form>        
-
-<form action="atualizamed" method="post">
+<form action="listar" method="post">
+	<table class="tabela2">
+	<tr>
+	<td>Informar Nome Paciente:
+	<input type="text" name="nome" size=50>
+	<input type="hidden" name="opc" value="listarconpacnome">
+	<input type="submit" value="Buscar"></td>
+	</tr>
+	</table>
+</form> 
+<form action="atualizacon" method="post">
 	<table  class="tabela2">
 	<tr>
 	<td>Informar Id:
@@ -76,18 +85,18 @@
 	<tr>
 	<td>Informar Id:
 	<input type="text" name="id" value="1" size=3>
-	<input type="hidden" name="opc" value="excluirmed">
+	<input type="hidden" name="opc" value="excluircon">
 	<input type="submit" value="Excluir"></td>
 	</tr>
 	</table>
 </form>
 
 <form action="listar" method="post">
-	<input type="hidden" name="opc" value="listarmed">
+	<input type="hidden" name="opc" value="listarcon">
 	<input type="submit" value="Listar Todos">
 </form>
-<form action="cadMedico.jsp">
-	<input type="submit" value="Novo Medico">
+<form action="cadConsulta">
+	<input type="submit" value="Nova Consulta">
 </form>
 
 <c:import url="rodape.jsp"></c:import>
