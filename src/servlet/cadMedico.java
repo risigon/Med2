@@ -15,6 +15,7 @@ import util.JPAUtilis;
 import entidades.medico;
 import entidades.paciente;
 
+
 /**
  * Servlet implementation class cadMedico
  */
@@ -67,6 +68,7 @@ public class cadMedico extends HttpServlet {
 			e1.printStackTrace();
 		}
 		
+				
 		inserirMedico(nome, cpf, crm, esp, endereco, bairro, cidade, estado, login, senha);
 		
 		request.getRequestDispatcher("cadMedico.jsp").forward(request, response);
@@ -86,15 +88,8 @@ public class cadMedico extends HttpServlet {
 		 med.setLogin(login);
 		 med.setSenha(senha);
 		 
-		 //criar conexao
-		 EntityManager conexao=JPAUtilis.criarManager();
-		 
-		 conexao.getTransaction().begin();
-		 conexao.persist(med);
-		 conexao.getTransaction().commit();
-		  
-		 conexao.close();
-		 	 
+		 Model.Cadastro.Inserir(med);
+		 	 	 
 		 
 	}
 	
