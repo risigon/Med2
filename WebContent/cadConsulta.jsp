@@ -48,6 +48,7 @@
 <option><c:out value="${list.nome}" /></option>
 </c:forEach>
 </select><br />
+
 <div class="form-title">Data Consulta</div>
 <input class="form-field" type="text" name="dataconsulta" size=10 maxlength=10 pattern="\d{2}\/\d{2}\/\d{4}\" placeholder="dd/mm/aaaa" /><br />
 <div class="form-title">Hora Consulta</div>

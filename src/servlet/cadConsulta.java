@@ -77,23 +77,23 @@ HttpSession sessao = request.getSession();
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String cpf = request.getParameter("cpf");
-		String crm = request.getParameter("crm");
+		String nomepac = request.getParameter("nomepac");
+		String nomemed = request.getParameter("nomemed");
 		String dtcons = request.getParameter("dataconsulta");
 		String horacons = request.getParameter("horaconsulta");
 		String obs = request.getParameter("obs");
 		String retorno = request.getParameter("retorno");
 		
 				
-		inserirConsulta(crm, cpf, dtcons, horacons, obs, retorno);
+		inserirConsulta(nomepac, nomemed, dtcons, horacons, obs, retorno);
 		
-				
-		request.getRequestDispatcher("cadConsulta.jsp").forward(request, response);
+		response.sendRedirect("cadConsulta");		
+		
 	
 		
 	}
 
-	private static void inserirConsulta(String crm, String cpf, String dtcons, String horacons, String obs, String retorno){
+	private static void inserirConsulta(String nomepac, String nomemed, String dtcons, String horacons, String obs, String retorno){
 		
 		//criar conexao
 		 EntityManager conexao=JPAUtilis.criarManager();
@@ -102,16 +102,17 @@ HttpSession sessao = request.getSession();
 		medico med = new medico();
 		paciente pac = new paciente();
 		
-		Query q1 = conexao.createQuery("select p from paciente p where p.cpf=:cpfpac");
-		q1.setParameter("cpfpac", cpf);
+		Query q1 = conexao.createQuery("select p from paciente p where p.nome=:nomepac");
+		q1.setParameter("nomepac", nomepac);
 		pac = (paciente) q1.getSingleResult();
 		
-		Query q2 = conexao.createQuery("select m from medico m where m.crm=:crmmed");
-		q2.setParameter("crmmed", crm);
+		Query q2 = conexao.createQuery("select m from medico m where m.nome=:nomemed");
+		q2.setParameter("nomemed", nomemed);
 		med = (medico) q2.getSingleResult();
 		
 		con.setMed(med);
 		con.setPac(pac);
+		con.setEspecialidade(med.getEspecialidade());
 		con.setDtcons(converterdatas.DataToDate(dtcons));
 		con.setHora(horacons);
 		con.setObs(obs);
