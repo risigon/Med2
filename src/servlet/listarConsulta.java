@@ -43,6 +43,12 @@ public class listarConsulta extends HttpServlet {
 		Query query = conexao.createQuery("select c From consulta c order by c.id");
 		List<consulta> consultas = query.getResultList();
 		
+		String converterdata=null;
+		for(consulta con: consultas){
+			converterdata=converterdatas.DateToData(con.getDtcons());
+			con.setDtcons(converterdata);
+		}
+			
 		request.setAttribute("conlista", consultas);
 		request.getRequestDispatcher("listarConsulta.jsp").forward(request, response);
 	}
