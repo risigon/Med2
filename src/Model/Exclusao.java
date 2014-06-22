@@ -52,7 +52,7 @@ public class Exclusao extends HttpServlet {
 		 conexao.remove(pac);
 		 conexao.getTransaction().commit();
 		 } catch(Exception e){
-		 conexao.getTransaction().rollback();	 
+		 return false;
 		 }finally{
 		 conexao.close();
 		 }
