@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
 
 import util.JPAUtilis;
 import entidades.consulta;
@@ -49,18 +50,30 @@ public class excluir extends HttpServlet {
 			if(Model.Exclusao.excluirPaciente(id))
 			response.sendRedirect("listarPaciente");
 			else{
-			response.getWriter().println("Erro ao excluir paciente, verificar se há consultas para o mesmo");	
+				String erro = "Erro ao excluir o PACIENTE!!! Verificar se o Id: "+id+" esta correto ou se há consulta para o mesmo";
+				request.setAttribute("erro", erro);
+				request.getRequestDispatcher("erros.jsp").forward(request, response);
 			}
 			break;
 		}
 		case ("excluirmed"):{
-			excluirMedico(id);
+			if(Model.Exclusao.excluirMedico(id))
 			response.sendRedirect("listarMedicos");
+			else{
+				String erro = "Erro ao excluir MEDICO!!! Verificar se o Id: "+id+" esta correto ou se há consulta para o mesmo";
+				request.setAttribute("erro", erro);
+				request.getRequestDispatcher("erros.jsp").forward(request, response);
+			}
 			break;
 		}
 		case ("excluircon"):{
-			excluirConsulta(id);
+			if(Model.Exclusao.excluirConsulta(id))
 			response.sendRedirect("listarConsulta");
+			else{
+				String erro = "Erro ao excluir a CONSULTA, verificar se existe o Id: "+id;
+				request.setAttribute("erro", erro);
+				request.getRequestDispatcher("erros.jsp").forward(request, response);
+			}
 			break;
 		}
 		}

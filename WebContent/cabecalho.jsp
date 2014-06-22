@@ -17,7 +17,9 @@
 String usuario = (String) sessao.getAttribute("usuario");
 %>
 <div class="form-container">
-<a href="menu"><img src="<c:url value="resources/img/climed.jpg"/>"/></a>
+
+<a href="menu"><img src="<c:url value="resources/img/climed.jpg"/>"/></a><BR>
+<a id="right" class="submit-button" href="javascript:window.history.go(-1)">Voltar</a>
 <%
 	if((sessao.getAttribute("usuario")==null) || (sessao.getAttribute("usuario")=="")){
 %>

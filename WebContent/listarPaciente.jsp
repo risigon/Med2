@@ -14,8 +14,6 @@
 
 <c:import url="cabecalho.jsp"></c:import>
 
-<a id="right" class="submit-button" href="menu">Voltar</a>
-
 <table id="zebra" class="tabela">
             <thead>
             <tr>
