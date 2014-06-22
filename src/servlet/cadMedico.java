@@ -69,12 +69,16 @@ public class cadMedico extends HttpServlet {
 		}
 		
 				
-		inserirMedico(nome, cpf, crm, esp, endereco, bairro, cidade, estado, login, senha);
-		
-		request.getRequestDispatcher("cadMedico.jsp").forward(request, response);
+		if(inserirMedico(nome, cpf, crm, esp, endereco, bairro, cidade, estado, login, senha))
+			request.getRequestDispatcher("cadMedico.jsp").forward(request, response);
+		else{
+			String erro = "Erro ao cadastrar MEDICO!!!";
+			request.setAttribute("erro", erro);
+			request.getRequestDispatcher("erros.jsp").forward(request, response);
+		}
 	}
 	
-	private static void inserirMedico(String nome, String cpf, String crm, String esp, String endereco, String bairro, String cidade, String estado, String login, String senha){
+	private static boolean inserirMedico(String nome, String cpf, String crm, String esp, String endereco, String bairro, String cidade, String estado, String login, String senha){
 		medico med = new medico();
 		
 		 med.setNome(nome);
@@ -88,7 +92,7 @@ public class cadMedico extends HttpServlet {
 		 med.setLogin(login);
 		 med.setSenha(senha);
 		 
-		 Model.Cadastro.Inserir(med);
+		 return Model.Cadastro.Inserir(med);
 		 	 	 
 		 
 	}

@@ -78,11 +78,6 @@ public class excluir extends HttpServlet {
 		}
 		}
 		
-		//if(request.getParameter("opc").equals("excluirpac")){
-		//excluirPaciente(id);
-		//}
-		
-		//response.sendRedirect("listarPaciente");
 		
 	}
 	

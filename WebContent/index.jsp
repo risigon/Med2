@@ -41,9 +41,14 @@
 				<li> <a href="listarMedicos">Listar</a></li>
 			</ul>
 		</li>
-		
-		
-		
+		<li> <a href="">Consulta</a> 
+			<ul>
+				<li> <a href="cadConsulta">Cadastrar</a></li>
+				<li> <a href="listarConsulta">Alterar</a></li>
+				<li> <a href="listarConsulta">Excluir</a></li>
+				<li> <a href="listarConsulta">Listar</a></li>
+			</ul>
+		</li>
 	</ul>
 	
 	

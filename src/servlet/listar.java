@@ -86,16 +86,7 @@ public class listar extends HttpServlet {
 	
 	protected void listarMedNome(String nome, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		EntityManager conexao=JPAUtilis.criarManager();
-		
-		Query q1 = conexao.createQuery("select count(*) from medico p where p.nome LIKE:nomebusca");
-		q1.setParameter("nomebusca", "%"+nome+"%");
-		List<Integer> qconta = q1.getResultList();
-		request.setAttribute("contador", qconta);
-		
-		Query query = conexao.createQuery("select p From medico p where p.nome LIKE:nomebusca order by p.nome");
-		query.setParameter("nomebusca", "%"+nome+"%");
-		List<medico> medicos = query.getResultList();
+		List<medico> medicos = Model.Lista.listarMedNome(nome, request, response);
 		
 		request.setAttribute("medlista", medicos);
 		request.getRequestDispatcher("listarMedico.jsp").forward(request, response);
@@ -104,17 +95,9 @@ public class listar extends HttpServlet {
 	
 protected void listarPacNome(String nome, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		EntityManager conexao=JPAUtilis.criarManager();
-		
-		Query q1 = conexao.createQuery("select count(*) from paciente p where p.nome LIKE:nomebusca");
-		q1.setParameter("nomebusca", "%"+nome+"%");
-		List<Integer> qconta = q1.getResultList();
-		request.setAttribute("contador", qconta);
-		
-		Query query = conexao.createQuery("select p From paciente p where p.nome LIKE:nomebusca order by p.nome");
-		query.setParameter("nomebusca", "%"+nome+"%");
-		List<paciente> pacientes = query.getResultList();
-		
+			
+		List<paciente> pacientes = Model.Lista.listarPacNome(nome, request, response);
+	
 		request.setAttribute("paclista", pacientes);
 		request.getRequestDispatcher("listarPaciente.jsp").forward(request, response);
 		
