@@ -118,55 +118,13 @@ HttpSession sessao = request.getSession();
 		con.setObs(obs);
 		con.setRetorno(retorno);
 		
-		
+		Model.Cadastro.InserirCon(con, pac, med);
 		 
-		 conexao.getTransaction().begin();
-		 med.setCons(con);
-		 pac.setCons(con);
-		 conexao.persist(con);
-		 conexao.getTransaction().commit();
-		  
-		 conexao.close();
 		 	 
 		 
 	}
 	
-	private static List<medico> listarmedico(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		medico med = new medico();
-		List<medico> medcrm = new ArrayList<>();
-				
-		 //criar conexao
-		EntityManager conexao=JPAUtilis.criarManager();
-		try{ 
-		Query q1 = conexao.createNativeQuery("select m from medico m");
-		medcrm = q1.getResultList(); 
-		
-		}catch(Exception e){
-			response.getWriter().println("Medico não encontrado");
-		}finally{
-				conexao.close();
-		}
-		return medcrm;
-		
-	}
 	
-	private static paciente validarcpf(String cpf){
-		paciente pac = new paciente();
-				
-		 //criar conexao
-		 EntityManager conexao=JPAUtilis.criarManager();
-		 
-		 Query q2 = conexao.createNativeQuery("select p From paciente p where p.cpf=:cpfpac");
-		 q2.setParameter("cpfpac", cpf);
-		 pac = (paciente) q2.getSingleResult();
-		 
-		 //System.out.println("Nome : "+pac.getNome()+"CPF : "+pac.getCpf());
-		  
-		 conexao.close();
-		return pac;
-		 	 
-		 
-	}
 	
 	
 

@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import util.JPAUtilis;
+import entidades.consulta;
 import entidades.medico;
+import entidades.paciente;
 
 /**
  * Servlet implementation class Cadastro
@@ -50,6 +52,32 @@ public class Cadastro extends HttpServlet {
 		  
 		 conexao.close();
 		 
+		return(true); 
+		}
+	
+	public static boolean Inserir(paciente pac) {
+		EntityManager conexao=JPAUtilis.criarManager();
+		 
+		 conexao.getTransaction().begin();
+		 conexao.persist(pac);
+		 conexao.getTransaction().commit();
+		  
+		 conexao.close();
+		 
+		return(true); 
+		}
+
+	public static boolean InserirCon(consulta con, paciente pac, medico med) {
+		EntityManager conexao=JPAUtilis.criarManager();
+		 
+		conexao.getTransaction().begin();
+		med.setCons(con);
+		pac.setCons(con);
+		conexao.persist(con);
+		conexao.getTransaction().commit();
+		  
+		conexao.close();
+		
 		return(true); 
 		}
 

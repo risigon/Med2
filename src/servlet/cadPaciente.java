@@ -86,19 +86,8 @@ public class cadPaciente extends HttpServlet {
 		 pac.setEstado(estado);
 		 pac.setLogin(login);
 		 pac.setSenha(senha);
-		 
-		 //criar conexao
-		 EntityManager conexao=JPAUtilis.criarManager();
-		 try{
-		 conexao.getTransaction().begin();
-		 conexao.persist(pac);
-		 conexao.getTransaction().commit();
-		 }catch(Exception e){
-			 
-		 }finally{
-		 conexao.close();
-		 }
-		 	 
+
+		 Model.Cadastro.Inserir(pac);
 		 
 	}
 	
