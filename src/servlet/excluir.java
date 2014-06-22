@@ -46,7 +46,7 @@ public class excluir extends HttpServlet {
 		
 		switch(opc){
 		case ("excluirpac"):{
-			excluirPaciente(id);
+			Model.Exclusao.excluirPaciente(id);
 			response.sendRedirect("listarPaciente");
 			break;
 		}
