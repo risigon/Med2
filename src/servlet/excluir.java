@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
 
 import util.JPAUtilis;
@@ -44,6 +45,10 @@ public class excluir extends HttpServlet {
 		
 		Integer id = Integer.parseInt(request.getParameter("id"));
 		String opc = request.getParameter("opc");
+
+		HttpSession sessao = request.getSession();
+		
+		if(sessao.getAttribute("usuario")!=null){		
 		
 		switch(opc){
 		case ("excluirpac"):{
@@ -77,8 +82,10 @@ public class excluir extends HttpServlet {
 			break;
 		}
 		}
-		
-		
+		}	
+		else{
+			response.sendRedirect("logindb");
+		}
 	}
 	
 	private static void excluirPaciente(int id){

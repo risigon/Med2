@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import util.JPAUtilis;
 import entidades.medico;
@@ -34,18 +35,28 @@ public class listarMedicos extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
+		HttpSession sessao = request.getSession();
+		
+		if(sessao.getAttribute("usuario")!=null){
+		
 		EntityManager conexao=JPAUtilis.criarManager();
 		
-		Query q1 = conexao.createQuery("select count(*) from medico");
+		/*Query q1 = conexao.createQuery("select count(*) from medico");
 		List<Integer> qconta = q1.getResultList();
 		request.setAttribute("contador", qconta);
 		
 		Query query = conexao.createQuery("select p From medico p order by p.nome");
-		List<medico> medicos = query.getResultList();
+		List<medico> medicos = query.getResultList();*/
+		
+		List<medico> medicos = Model.Lista.listarMed(request, response);
 		
 		request.setAttribute("medlista", medicos);
 		request.getRequestDispatcher("listarMedico.jsp").forward(request, response);
+	}
+		else{
+			response.sendRedirect("logindb");
+		}
 	}
 
 	/**

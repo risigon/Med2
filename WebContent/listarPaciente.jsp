@@ -89,7 +89,7 @@
 	<input type="hidden" name="opc" value="listarpac">
 	<input type="submit" value="Listar Todos">
 </form>
-<form action="cadPaciente.jsp">
+<form action="cadPaciente">
 	<input type="submit" value="Novo Paciente">
 </form>
 

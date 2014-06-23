@@ -60,7 +60,7 @@ public class atualizapac extends HttpServlet {
 		request.getRequestDispatcher("atualizaPac.jsp").forward(request, response);
 	}
 	else{
-		request.getRequestDispatcher("login.jsp").forward(request, response);
+		response.sendRedirect("logindb");
 	}
 }
 }

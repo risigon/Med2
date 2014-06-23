@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import util.JPAUtilis;
 import entidades.consulta;
@@ -46,6 +47,10 @@ public class listar extends HttpServlet {
 		String nome = request.getParameter("nome");
 		String opc = request.getParameter("opc");
 		
+		HttpSession sessao = request.getSession();
+		
+		if(sessao.getAttribute("usuario")!=null){
+		
 		switch(opc){
 		
 		case("listarmednome"):{
@@ -79,7 +84,9 @@ public class listar extends HttpServlet {
 		
 		}
 		
-		
+		}else{
+			response.sendRedirect("logindb");
+		}
 	
 		
 	}
