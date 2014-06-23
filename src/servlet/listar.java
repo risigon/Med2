@@ -105,14 +105,7 @@ protected void listarPacNome(String nome, HttpServletRequest request, HttpServle
 	
 protected void listarPac(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 	
-	EntityManager conexao=JPAUtilis.criarManager();
-	
-	Query q1 = conexao.createQuery("select count(*) from paciente");
-	List<Integer> qconta = q1.getResultList();
-	request.setAttribute("contador", qconta);
-	
-	Query query = conexao.createQuery("select p From paciente p order by p.nome");
-	List<paciente> pacientes = query.getResultList();
+	List<paciente> pacientes = Model.Lista.listarPac(request, response);
 	
 	request.setAttribute("paclista", pacientes);
 	request.getRequestDispatcher("listarPaciente.jsp").forward(request, response);
@@ -121,14 +114,7 @@ protected void listarPac(HttpServletRequest request, HttpServletResponse respons
 
 protected void listarMed(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 	
-	EntityManager conexao=JPAUtilis.criarManager();
-	
-	Query q1 = conexao.createQuery("select count(*) from medico");
-	List<Integer> qconta = q1.getResultList();
-	request.setAttribute("contador", qconta);
-	
-	Query query = conexao.createQuery("select p From medico p order by p.nome");
-	List<medico> medicos = query.getResultList();
+	List<medico> medicos = Model.Lista.listarMed(request, response);
 	
 	request.setAttribute("medlista", medicos);
 	request.getRequestDispatcher("listarMedico.jsp").forward(request, response);
@@ -137,14 +123,7 @@ protected void listarMed(HttpServletRequest request, HttpServletResponse respons
 
 protected void listarCon(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 	
-	EntityManager conexao=JPAUtilis.criarManager();
-	
-	Query q1 = conexao.createQuery("select count(*) from consulta");
-	List<Integer> qconta = q1.getResultList();
-	request.setAttribute("contador", qconta);
-	
-	Query query = conexao.createQuery("select c From consulta c order by c.id");
-	List<consulta> consultas = query.getResultList();
+	List<consulta> consultas = Model.Lista.listarCon(request, response);
 	
 	request.setAttribute("conlista", consultas);
 	request.getRequestDispatcher("listarConsulta.jsp").forward(request, response);
@@ -153,16 +132,7 @@ protected void listarCon(HttpServletRequest request, HttpServletResponse respons
 
 protected void listarConPacNome(String nome, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 	
-	EntityManager conexao=JPAUtilis.criarManager();
-	
-	Query q1 = conexao.createQuery("select count(*) from consulta c where c.pac.nome LIKE:nomebusca");
-	q1.setParameter("nomebusca", "%"+nome+"%");
-	List<Integer> qconta = q1.getResultList();
-	request.setAttribute("contador", qconta);
-	
-	Query query = conexao.createQuery("select c From consulta c where c.pac.nome LIKE:nomebusca order by c.pac.nome");
-	query.setParameter("nomebusca", "%"+nome+"%");
-	List<consulta> consultas = query.getResultList();
+	List<consulta> consultas = Model.Lista.listarConPacNome(nome, request, response);
 	
 	request.setAttribute("conlista", consultas);
 	request.getRequestDispatcher("listarConsulta.jsp").forward(request, response);
@@ -171,16 +141,7 @@ protected void listarConPacNome(String nome, HttpServletRequest request, HttpSer
 
 protected void listarConMedNome(String nome, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 	
-	EntityManager conexao=JPAUtilis.criarManager();
-	
-	Query q1 = conexao.createQuery("select count(*) from consulta c where c.med.nome LIKE:nomebusca");
-	q1.setParameter("nomebusca", "%"+nome+"%");
-	List<Integer> qconta = q1.getResultList();
-	request.setAttribute("contador", qconta);
-	
-	Query query = conexao.createQuery("select c From consulta c where c.med.nome LIKE:nomebusca order by c.med.nome");
-	query.setParameter("nomebusca", "%"+nome+"%");
-	List<consulta> consultas = query.getResultList();
+	List<consulta> consultas = Model.Lista.listarConMedNome(nome, request, response);
 	
 	request.setAttribute("conlista", consultas);
 	request.getRequestDispatcher("listarConsulta.jsp").forward(request, response);

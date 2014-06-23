@@ -82,5 +82,85 @@ public static List listarPacNome(String nome, HttpServletRequest request, HttpSe
 		 
 		
 	}
+
+public static List listarPac(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 	
+	EntityManager conexao=JPAUtilis.criarManager();
+	
+	Query q1 = conexao.createQuery("select count(*) from paciente");
+	List<Integer> qconta = q1.getResultList();
+	request.setAttribute("contador", qconta);
+	
+	Query query = conexao.createQuery("select p From paciente p order by p.nome");
+	List<paciente> pacientes = query.getResultList();
+	
+	return pacientes;
+	 
+}
+
+public static List listarMed(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	
+	EntityManager conexao=JPAUtilis.criarManager();
+	
+	Query q1 = conexao.createQuery("select count(*) from medico");
+	List<Integer> qconta = q1.getResultList();
+	request.setAttribute("contador", qconta);
+	
+	Query query = conexao.createQuery("select p From medico p order by p.nome");
+	List<medico> medicos = query.getResultList();
+	
+	return medicos;
+	 
+}
+
+public static List listarCon(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	
+	EntityManager conexao=JPAUtilis.criarManager();
+	
+	Query q1 = conexao.createQuery("select count(*) from consulta");
+	List<Integer> qconta = q1.getResultList();
+	request.setAttribute("contador", qconta);
+	
+	Query query = conexao.createQuery("select c From consulta c order by c.id");
+	List<consulta> consultas = query.getResultList();
+	
+	return consultas;
+	 
+}
+
+public static List listarConPacNome(String nome, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	
+	EntityManager conexao=JPAUtilis.criarManager();
+	
+	Query q1 = conexao.createQuery("select count(*) from consulta c where c.pac.nome LIKE:nomebusca");
+	q1.setParameter("nomebusca", "%"+nome+"%");
+	List<Integer> qconta = q1.getResultList();
+	request.setAttribute("contador", qconta);
+	
+	Query query = conexao.createQuery("select c From consulta c where c.pac.nome LIKE:nomebusca order by c.pac.nome");
+	query.setParameter("nomebusca", "%"+nome+"%");
+	List<consulta> consultas = query.getResultList();
+
+	
+	return consultas;
+	 
+}
+
+public static List listarConMedNome(String nome, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	
+	EntityManager conexao=JPAUtilis.criarManager();
+	
+	Query q1 = conexao.createQuery("select count(*) from consulta c where c.med.nome LIKE:nomebusca");
+	q1.setParameter("nomebusca", "%"+nome+"%");
+	List<Integer> qconta = q1.getResultList();
+	request.setAttribute("contador", qconta);
+	
+	Query query = conexao.createQuery("select c From consulta c where c.med.nome LIKE:nomebusca order by c.med.nome");
+	query.setParameter("nomebusca", "%"+nome+"%");
+	List<consulta> consultas = query.getResultList();
+	
+	
+	return consultas;
+	 
+}
 }
