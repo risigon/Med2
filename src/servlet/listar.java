@@ -45,6 +45,7 @@ public class listar extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String nome = request.getParameter("nome");
+		int id = Integer.parseInt(request.getParameter("id"));
 		String opc = request.getParameter("opc");
 		
 		HttpSession sessao = request.getSession();
@@ -57,6 +58,12 @@ public class listar extends HttpServlet {
 			listarMedNome(nome, request, response);
 			break;
 		}
+		
+		case("listarmedid"):{
+			listarMedId(id, request, response);
+			break;
+		}
+		
 		case("listarpacnome"):{
 			listarPacNome(nome, request, response);
 			break;
@@ -65,6 +72,12 @@ public class listar extends HttpServlet {
 			listarPac(request, response);
 			break;
 		}
+		
+		case("listarpacid"):{
+			listarPacId(id, request, response);
+			break;
+		}
+		
 		case("listarmed"):{
 			listarMed(request, response);
 			break;
@@ -100,6 +113,16 @@ public class listar extends HttpServlet {
 		
 	}
 	
+	protected void listarMedId(int id, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+		
+		List<medico> medicos = Model.Lista.listarMedId(id, request, response);
+
+		request.setAttribute("medlista", medicos);
+		request.getRequestDispatcher("atualizaMed.jsp").forward(request, response);
+		
+	}	
+	
 protected void listarPacNome(String nome, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 			
@@ -109,7 +132,18 @@ protected void listarPacNome(String nome, HttpServletRequest request, HttpServle
 		request.getRequestDispatcher("listarPaciente.jsp").forward(request, response);
 		
 	}
+
+protected void listarPacId(int id, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 	
+	
+	List<paciente> pacientes = Model.Lista.listarPacId(id, request, response);
+
+	request.setAttribute("paclista", pacientes);
+	request.getRequestDispatcher("atualizaPac.jsp").forward(request, response);
+	
+}
+
+
 protected void listarPac(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 	
 	List<paciente> pacientes = Model.Lista.listarPac(request, response);
@@ -154,5 +188,7 @@ protected void listarConMedNome(String nome, HttpServletRequest request, HttpSer
 	request.getRequestDispatcher("listarConsulta.jsp").forward(request, response);
 	
 }
+
+
 
 }

@@ -63,6 +63,23 @@ public class Lista extends HttpServlet {
 		 
 		
 	}
+	
+	public static List listarMedId(int id, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+		EntityManager conexao=JPAUtilis.criarManager();
+		
+		Query query = conexao.createQuery("select p From medico p where p.idmed=:idbusca");
+		query.setParameter("idbusca", id);
+		
+		List<medico> medicos = query.getResultList();
+
+
+
+		return medicos;
+		 
+		
+	}
+
 
 public static List listarPacNome(String nome, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
@@ -82,6 +99,22 @@ public static List listarPacNome(String nome, HttpServletRequest request, HttpSe
 		 
 		
 	}
+
+public static List listarPacId(int id, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	
+	EntityManager conexao=JPAUtilis.criarManager();
+	
+	Query query = conexao.createQuery("select p From paciente p where p.idpac=:idbusca");
+	query.setParameter("idbusca", id);
+	
+	List<paciente> pacientes = query.getResultList();
+
+
+	return pacientes;
+	 
+	
+}
+
 
 public static List listarPac(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 	

@@ -62,11 +62,12 @@
 	</table>
 </form>        
 
-<form action="atualizamed" method="post">
+<form action="listar" method="post">
 	<table  class="tabela2">
 	<tr>
 	<td>Informar Id:
 	<input type="text" name="id" value="1" size=3>
+	<input type="hidden" name="opc" value="listarmedid">
 	<input type="submit" value="Alterar"></td>
 	</tr>
 	</table>

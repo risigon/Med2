@@ -64,11 +64,12 @@
 	</table>
 </form>
 
-<form action="atualizapac" method="post">
+<form action="listar" method="post">
 	<table class="tabela2">
 	<tr>
 	<td>Id:
 	<input type="text" name="id" size=3>
+	<input type="hidden" name="opc" value="listarpacid">
 	<input type="submit" value="Atualizar"></td>
 	</tr>
 	</table>

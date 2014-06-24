@@ -55,90 +55,36 @@ public class gravar extends HttpServlet {
 		String bairro = request.getParameter("bairro");
 		String cidade = request.getParameter("cidade");
 		String estado = request.getParameter("estado");
-		//String login = request.getParameter("login");
-		//String passwd = request.getParameter("senha");
-		
-		/*String senha=null;
-		try {
-			senha = senhamd5.stringtomd5(passwd);
-		} catch (NoSuchAlgorithmException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
 		
 		
 		switch(opc){
 		case ("atualizapac"):{
-			atualizarPaciente(id, nome, cpf, endereco, bairro, cidade, estado);
-			response.sendRedirect("listarPaciente");
+			if(Model.Atualizar.atualizarPac(id, nome, cpf, endereco, bairro, cidade, estado)){
+				response.sendRedirect("listarPaciente");	
+			}else{
+				String erro = "Erro ao Atualizar cadastro do Paciente "+nome;
+				request.setAttribute("erro", erro);
+				request.getRequestDispatcher("erros.jsp").forward(request, response);
+			}
 			break;
 				
 		}
 		case ("atualizamed"):{
-			atualizarMedico(id, nome, cpf, crm, esp, endereco, bairro, cidade, estado);
+			if(Model.Atualizar.atualizarMed(id, nome, cpf, crm, esp, endereco, bairro, cidade, estado)){
+				response.sendRedirect("listarMedicos");	
+			}else{
+				String erro = "Erro ao Atualizar cadastro do Médico "+nome;
+				request.setAttribute("erro", erro);
+				request.getRequestDispatcher("erros.jsp").forward(request, response);
+			}
 			
-			response.sendRedirect("listarMedicos");
+			
 			break;
 		}
 		}
 		
 	}
 	
-	private static void atualizarPacienteExcluir(int id, String nome, String cpf, String endereco, String bairro, String cidade, String estado){
-		paciente pac = new paciente();
-		
-		 pac.setIdpac(id);
-		 pac.setNome(nome);
-		 pac.setCpf(cpf);
-		 pac.setEndereco(endereco);
-		 pac.setBairro(bairro);
-		 pac.setCidade(cidade);
-		 pac.setEstado(estado);
-		 //pac.setLogin(login);
-		 //pac.setSenha(senha);
-		 
-		 //criar conexao
-		 EntityManager conexao=JPAUtilis.criarManager();
-		 
-		 try{
-		 conexao.getTransaction().begin();
-		 conexao.merge(pac);
-		 conexao.getTransaction().commit();
-		 }catch(Exception e){
-			conexao.getTransaction().rollback(); //volta ao estado anterior 
-		 }finally{	 
-		 conexao.close();
-		 }
-		 
-	}
-	
-	private static void atualizarMedicoExcluir(int id, String nome, String cpf, String crm, String endereco, String bairro, String cidade, String estado, String login, String senha){
-		medico med = new medico();
-		
-		 med.setIdmed(id);
-		 med.setNome(nome);
-		 med.setCrm(crm);
-		 med.setCpf(cpf);
-		 med.setEndereco(endereco);
-		 med.setBairro(bairro);
-		 med.setCidade(cidade);
-		 med.setEstado(estado);
-		 med.setLogin(login);
-		 med.setSenha(senha);
-		 
-		 //criar conexao
-		 EntityManager conexao=JPAUtilis.criarManager();
-		 
-		 try{
-		 conexao.getTransaction().begin();
-		 conexao.merge(med);
-		 conexao.getTransaction().commit();
-		 }catch(Exception e){
-			conexao.getTransaction().rollback(); //volta ao estado anterior 
-		 }finally{	 
-		 conexao.close();
-		 }
-	}
 	private static void atualizarMedico(int id, String nome, String cpf, String crm, String esp, String endereco, String bairro, String cidade, String estado){
 												 
 				 //criar conexao
