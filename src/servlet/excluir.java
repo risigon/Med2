@@ -122,7 +122,7 @@ public class excluir extends HttpServlet {
 		 }finally{
 		 conexao.close();	 
 		 }
-		 System.out.println("Id: "+ med.getIdmed()+"Nome: "+med.getNome()+"Excluido");
+		 
 		
 	}
 	
@@ -141,7 +141,7 @@ private static void excluirConsulta(int id){
 		 }finally{
 		 conexao.close();	 
 		 }
-		 System.out.println("Id Consulta: "+ con.getId()+"Nome: "+con.getPac().getNome()+"Excluido");
+		 
 		
 	}
 }

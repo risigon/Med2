@@ -1,6 +1,7 @@
 package Model;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -49,6 +50,8 @@ public class Lista extends HttpServlet {
 		
 		EntityManager conexao=JPAUtilis.criarManager();
 		
+		List <medico> medicos = new ArrayList<>();
+		try{
 		Query q1 = conexao.createQuery("select count(*) from medico p where p.nome LIKE:nomebusca");
 		q1.setParameter("nomebusca", "%"+nome+"%");
 		List<Integer> qconta = q1.getResultList();
@@ -56,8 +59,14 @@ public class Lista extends HttpServlet {
 		
 		Query query = conexao.createQuery("select p From medico p where p.nome LIKE:nomebusca order by p.nome");
 		query.setParameter("nomebusca", "%"+nome+"%");
-		List<medico> medicos = query.getResultList();
-
+		medicos = query.getResultList();
+		}
+		catch(Exception e){
+			
+		}
+		finally{
+			conexao.close();
+		}
 	
 		return medicos;
 		 
@@ -68,15 +77,23 @@ public class Lista extends HttpServlet {
 		
 		EntityManager conexao=JPAUtilis.criarManager();
 		
+		List <medico> medicos = null;
+		
+		try{
 		Query query = conexao.createQuery("select p From medico p where p.idmed=:idbusca");
 		query.setParameter("idbusca", id);
 		
-		List<medico> medicos = query.getResultList();
-
-
-
+		medicos = query.getResultList();
+		}
+		catch(Exception e){
+			
+		}
+		finally{
+			conexao.close();
+		}
+		
 		return medicos;
-		 
+
 		
 	}
 
@@ -135,13 +152,21 @@ public static List listarMed(HttpServletRequest request, HttpServletResponse res
 	
 	EntityManager conexao=JPAUtilis.criarManager();
 	
+	List <medico> medicos = null;
+	try{
 	Query q1 = conexao.createQuery("select count(*) from medico");
 	List<Integer> qconta = q1.getResultList();
 	request.setAttribute("contador", qconta);
 	
 	Query query = conexao.createQuery("select p From medico p order by p.nome");
-	List<medico> medicos = query.getResultList();
-	
+	medicos = query.getResultList();
+	}
+	catch(Exception e){
+		
+	}
+	finally{
+		conexao.close();
+	}
 	return medicos;
 	 
 }

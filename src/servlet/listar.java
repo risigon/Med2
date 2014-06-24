@@ -45,7 +45,6 @@ public class listar extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String nome = request.getParameter("nome");
-		int id = Integer.parseInt(request.getParameter("id"));
 		String opc = request.getParameter("opc");
 		
 		HttpSession sessao = request.getSession();
@@ -60,6 +59,7 @@ public class listar extends HttpServlet {
 		}
 		
 		case("listarmedid"):{
+			int id = Integer.parseInt(request.getParameter("id"));
 			listarMedId(id, request, response);
 			break;
 		}
@@ -74,6 +74,7 @@ public class listar extends HttpServlet {
 		}
 		
 		case("listarpacid"):{
+			int id = Integer.parseInt(request.getParameter("id"));
 			listarPacId(id, request, response);
 			break;
 		}
