@@ -68,11 +68,12 @@
 	</tr>
 	</table>
 </form> 
-<form action="atualizacon" method="post">
+<form action="listar" method="post">
 	<table  class="tabela2">
 	<tr>
 	<td>Informar Id:
 	<input type="text" name="id" value="1" size=3>
+	<input type="hidden" name="opc" value="listarconid">
 	<input type="submit" value="Alterar"></td>
 	</tr>
 	</table>

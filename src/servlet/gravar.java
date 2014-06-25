@@ -56,6 +56,12 @@ public class gravar extends HttpServlet {
 		String cidade = request.getParameter("cidade");
 		String estado = request.getParameter("estado");
 		
+		String nomemed = request.getParameter("nomemed");
+		String nomepac = request.getParameter("nomepac");
+		String dtcons = request.getParameter("dtcons");
+		String hora = request.getParameter("hora");
+		String obs = request.getParameter("obs");
+		String retorno = request.getParameter("retorno");
 		
 		switch(opc){
 		case ("atualizapac"):{
@@ -81,6 +87,19 @@ public class gravar extends HttpServlet {
 			
 			break;
 		}
+		case ("atualizacon"):{
+			if(Model.Atualizar.atualizarCon(id, nomepac, nomemed, esp, dtcons, hora, obs, retorno, request, response)){
+				response.sendRedirect("listarConsulta");	
+			}else{
+				String erro = "Erro ao Atualizar cadastro do Médico "+nome;
+				request.setAttribute("erro", erro);
+				request.getRequestDispatcher("erros.jsp").forward(request, response);
+			}
+			
+			
+			break;
+		}
+		
 		}
 		
 	}

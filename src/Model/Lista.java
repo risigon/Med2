@@ -204,6 +204,21 @@ public static List listarConPacNome(String nome, HttpServletRequest request, Htt
 	 
 }
 
+public static List listarConId(int id, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	
+	EntityManager conexao=JPAUtilis.criarManager();
+	
+	Query query = conexao.createQuery("select c From consulta c where c.id=:idbusca");
+	query.setParameter("idbusca", id);
+	
+	List<consulta> consultas = query.getResultList();
+
+
+	return consultas;
+	 
+	
+}
+
 public static List listarConMedNome(String nome, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 	
 	EntityManager conexao=JPAUtilis.criarManager();

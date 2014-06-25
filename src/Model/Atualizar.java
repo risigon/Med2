@@ -1,6 +1,7 @@
 package Model;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import entidades.medico;
+import entidades.paciente;
 import util.JPAUtilis;
 
 /**
@@ -97,5 +100,39 @@ conexao.close();
 return true;
 
 }
+
+public static boolean atualizarCon(int id, String nomepac, String nomemed, String esp, String dtcons, String hora, String obs, String retorno, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+
+	//criar conexao
+	EntityManager conexao=JPAUtilis.criarManager();
+
+	List<medico> med = Model.Lista.listarMedNome(nomemed, request, response);
+	List<paciente> pac = Model.Lista.listarPacNome(nomepac, request, response);
+    
+	String data = servlet.converterdatas.DataToDate(dtcons);
+	
+	try{
+	conexao.getTransaction().begin();
+	Query q2 = conexao.createQuery("update consulta c set c.med=:med, c.pac=:pac, c.especialidade=:esp, c.dtcons=:dtcons, c.hora=:hora, c.obs=:obs, c.retorno=:retorno  where c.id=:id");
+	q2.setParameter("id", id);
+	q2.setParameter("med", med);
+	q2.setParameter("pac", pac);
+	q2.setParameter("esp", esp);
+	q2.setParameter("dtcons", data);
+	q2.setParameter("hora", hora);
+	q2.setParameter("obs", obs);
+	q2.setParameter("retorno", retorno);
+	q2.executeUpdate();
+	conexao.getTransaction().commit();
+	}catch(Exception e){
+		conexao.getTransaction().rollback(); //volta ao estado anterior 
+	}finally{	 
+	conexao.close();
+	}
+	return true;
+
+	}
+
+
 
 }

@@ -31,17 +31,12 @@
 
 <form class="form-container" action="cadConsulta" method="post">
 <div class="form-title"><h4>Cadastrar Consultas</h4></div>
-<!-- div class="form-title">Nome Paciente</div>
-<input class="form-field" type="text" name="nomepac" size=50/><br /-->
 <div class="form-title">Paciente</div>
-<!-- input class="form-field" type="text" name="cpf" size=14 maxlength=14 OnKeyPress="formatar('###.###.###-##', this)" /><br /-->
 <select class="form-field" name="nomepac">
 <c:forEach var="lista" items="${listapac}">
 <option><c:out value="${lista.nome}" /></option>
 </c:forEach>
 </select><br />
-<!-- div class="form-title">Nome Medico</div>
-<input class="form-field" type="text" name="nomemed" size=50/><br /-->
 <div class="form-title">Medico</div>
 <select class="form-field" name="nomemed">
 <c:forEach var="list" items="${listamed}">

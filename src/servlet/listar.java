@@ -96,6 +96,12 @@ public class listar extends HttpServlet {
 			break;
 		}
 		
+		case("listarconid"):{
+			int id = Integer.parseInt(request.getParameter("id"));
+			listarConId(id, request, response);
+			break;
+		}
+		
 		}
 		
 		}else{
@@ -190,6 +196,25 @@ protected void listarConMedNome(String nome, HttpServletRequest request, HttpSer
 	
 }
 
+protected void listarConId(int id, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	
+	
+	List<consulta> consultas = Model.Lista.listarConId(id, request, response);
+	for(consulta con: consultas){
+		con.setDtcons(converterdatas.DateToData(con.getDtcons()));
+	}
+	
+	
+	List<medico> medicos = Model.Lista.listarMed(request, response);
+	
+	List<paciente> pacientes = Model.Lista.listarPac(request, response);
+
+	request.setAttribute("conlista", consultas);
+	request.setAttribute("medlista", medicos);
+	request.setAttribute("paclista", pacientes);
+	request.getRequestDispatcher("atualizaCon.jsp").forward(request, response);
+	
+}
 
 
 }
