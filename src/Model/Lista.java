@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import util.JPAUtilis;
+import entidades.Login;
 import entidades.consulta;
 import entidades.medico;
 import entidades.paciente;
@@ -236,4 +237,17 @@ public static List listarConMedNome(String nome, HttpServletRequest request, Htt
 	return consultas;
 	 
 }
+
+public static List listarUsu(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	
+	EntityManager conexao=JPAUtilis.criarManager();
+	
+		
+	Query query = conexao.createQuery("select l From Login l order by l.id");
+	List<Login> usuarios = query.getResultList();
+	
+	return usuarios;
+	 
+}
+
 }

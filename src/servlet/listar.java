@@ -111,7 +111,7 @@ public class listar extends HttpServlet {
 		
 	}
 	
-	protected void listarMedNome(String nome, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+protected void listarMedNome(String nome, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 		List<medico> medicos = Model.Lista.listarMedNome(nome, request, response);
 		
@@ -124,10 +124,15 @@ public class listar extends HttpServlet {
 		
 		
 		List<medico> medicos = Model.Lista.listarMedId(id, request, response);
-
+		
+		if(medicos.isEmpty()){
+			String erro = "Id Inexistente!!!";
+			request.setAttribute("erro", erro);
+			request.getRequestDispatcher("erros.jsp").forward(request, response);
+		}else{
 		request.setAttribute("medlista", medicos);
 		request.getRequestDispatcher("atualizaMed.jsp").forward(request, response);
-		
+		}
 	}	
 	
 protected void listarPacNome(String nome, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -144,10 +149,16 @@ protected void listarPacId(int id, HttpServletRequest request, HttpServletRespon
 	
 	
 	List<paciente> pacientes = Model.Lista.listarPacId(id, request, response);
-
+	
+	if(pacientes.isEmpty()){
+		String erro = "Id Inexistente!!!";
+		request.setAttribute("erro", erro);
+		request.getRequestDispatcher("erros.jsp").forward(request, response);
+	}else{
+	
 	request.setAttribute("paclista", pacientes);
 	request.getRequestDispatcher("atualizaPac.jsp").forward(request, response);
-	
+	}
 }
 
 
@@ -209,12 +220,19 @@ protected void listarConId(int id, HttpServletRequest request, HttpServletRespon
 	
 	List<paciente> pacientes = Model.Lista.listarPac(request, response);
 
+	if(consultas.isEmpty()){
+		String erro = "Id Inexistente!!!";
+		request.setAttribute("erro", erro);
+		request.getRequestDispatcher("erros.jsp").forward(request, response);
+	}else{
+	
 	request.setAttribute("conlista", consultas);
 	request.setAttribute("medlista", medicos);
 	request.setAttribute("paclista", pacientes);
 	request.getRequestDispatcher("atualizaCon.jsp").forward(request, response);
 	
 }
-
+}
 
 }
+

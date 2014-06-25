@@ -53,8 +53,8 @@
 				<li> <a href="listarPaciente">Listar Pacientes</a></li>
 				<li> <a href="listarMedicos">Listar Médicos</a></li>
 				<li> <a href="listarConsulta">Listar Consultas</a></li>
-				<li> <a href="">Listar Consultas por Periodo</a></li>
-				<li> <a href="">Listar Consultas por Medico</a></li>
+				<li> <a href="listarConsulta">Listar Consultas por Paciente</a></li>
+				<li> <a href="listarConsulta">Listar Consultas por Medico</a></li>
 			</ul>
 		</li>
 		<li> <a href="cadUsuario">Cadastrar Usuários</a></li>

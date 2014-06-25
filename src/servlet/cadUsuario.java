@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
@@ -51,45 +52,65 @@ public class cadUsuario extends HttpServlet {
 		
 		String usuario = request.getParameter("usuario");
 		String passwd = request.getParameter("pass");
+		String confpasswd = request.getParameter("passconf");
 		
+		if(passwd.equals(confpasswd)&&validausuario(usuario,request,response)){
 		String senha=null;
-		try {
+		try {			
 			senha = senhamd5.stringtomd5(passwd);
-		} catch (NoSuchAlgorithmException e1) {
-			// TODO Auto-generated catch block
+			inserirUsuario(usuario, senha, request, response);
+		} 
+		catch (NoSuchAlgorithmException e1) {
+			
 			e1.printStackTrace();
+		} 
+		finally{
+			
 		}
 		
-		try{
-			inserirUsuario(usuario, senha);
-		}catch(Exception e){
-			
-		}finally{
-			request.getRequestDispatcher("cadUsuario.jsp").forward(request, response);
+	
+		}else{
+			String erro = "Senha Diferente de Confirmar Senha";
+			request.setAttribute("erro", erro);
+			request.getRequestDispatcher("erros.jsp").forward(request, response);
 		}
 		
 	}
 	
-	protected void inserirUsuario(String usuario, String senha){
+	protected void inserirUsuario(String usuario, String senha, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 		Login log = new Login();
 		
 		log.setUsuario(usuario);
 		log.setSenha(senha);
 		
-		 //criar conexao
-		 EntityManager conexao=JPAUtilis.criarManager();
-		 try{
-		 conexao.getTransaction().begin();
-		 conexao.persist(log);
-		 conexao.getTransaction().commit();
+		try{
+			 if(Model.Cadastro.InserirUsu(log)){
+				 request.getRequestDispatcher("cadUsuario.jsp").forward(request, response);
+			 }else{
+					String erro = "Usuario Não Cadastrado";
+					request.setAttribute("erro", erro);
+					request.getRequestDispatcher("erros.jsp").forward(request, response);
+				}
+				 
 		 }catch(Exception e){
-			 
+			 e.printStackTrace();
 		 }finally{
-		 conexao.close();
-		 }	 
-
+		 
+		 }	
+				
+	}
+	
+	protected boolean validausuario(String usuario, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		List<Login> log = Model.Lista.listarUsu(request, response);
 		
+		for(Login usu: log){
+			if(usu.getUsuario().equals(usuario)){
+				return false;
+			}
+		}
+		return true;
 	}
 
 }
+
