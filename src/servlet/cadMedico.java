@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
@@ -64,21 +65,32 @@ public class cadMedico extends HttpServlet {
 		try {
 			senha = senhamd5.stringtomd5(passwd);
 		} catch (NoSuchAlgorithmException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
+		try{
+		List<medico> medi = Model.Lista.listarMed(request, response);
+	
+		for(medico med: medi){
+			if(med.getCpf().equals(cpf)||med.getCrm().equals(crm)){
+				String erro = "CPF ou CRM Já Cadastrado";
+				request.setAttribute("erro", erro);
+				request.getRequestDispatcher("erros.jsp").forward(request, response);
+			}else{
 				
-		if(inserirMedico(nome, cpf, crm, esp, endereco, bairro, cidade, estado, login, senha))
-			request.getRequestDispatcher("cadMedico.jsp").forward(request, response);
-		else{
-			String erro = "Erro ao cadastrar MEDICO!!!";
-			request.setAttribute("erro", erro);
-			request.getRequestDispatcher("erros.jsp").forward(request, response);
+			}
+		}
+				
+		inserirMedico(nome, cpf, crm, esp, endereco, bairro, cidade, estado, login, senha, request, response);
+		}
+		catch(Exception e){
+			
+		}finally{
+			
 		}
 	}
 	
-	private static boolean inserirMedico(String nome, String cpf, String crm, String esp, String endereco, String bairro, String cidade, String estado, String login, String senha){
+	private static void inserirMedico(String nome, String cpf, String crm, String esp, String endereco, String bairro, String cidade, String estado, String login, String senha, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		medico med = new medico();
 		
 		 med.setNome(nome);
@@ -92,10 +104,18 @@ public class cadMedico extends HttpServlet {
 		 med.setLogin(login);
 		 med.setSenha(senha);
 		 
-		 return Model.Cadastro.Inserir(med);
-		 	 	 
+		 if(Model.Cadastro.Inserir(med))
+		 
+		 request.getRequestDispatcher("cadMedico.jsp").forward(request, response);
+			else{
+				String erro = "Erro ao cadastrar MEDICO!!!";
+				request.setAttribute("erro", erro);
+				request.getRequestDispatcher("erros.jsp").forward(request, response);
+			}
 		 
 	}
 	
 
 }
+
+

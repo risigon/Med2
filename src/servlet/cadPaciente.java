@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
@@ -47,7 +48,7 @@ public class cadPaciente extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String nome = request.getParameter("nome");
 		String cpf = request.getParameter("cpf");
@@ -62,20 +63,31 @@ public class cadPaciente extends HttpServlet {
 		try {
 			senha = senhamd5.stringtomd5(passwd);
 		} catch (NoSuchAlgorithmException e1) {
-			// TODO Auto-generated catch block
+			
 			e1.printStackTrace();
 		}
 		
 		try{
-		inserirPaciente(nome, cpf, endereco, bairro, cidade, estado, login, senha);
-		}catch(Exception e){
+		List <paciente> paci = Model.Lista.listarPac(request, response);
+		for(paciente pac: paci){
+			if(pac.getCpf().equals(cpf)){
+				String erro = "CPF Já Cadastrado";
+				request.setAttribute("erro", erro);
+				request.getRequestDispatcher("erros.jsp").forward(request, response);
+			}
+			
+		}
+		inserirPaciente(nome, cpf, endereco, bairro, cidade, estado, login, senha, request, response);
+		}
+		catch(Exception e){
 			
 		}finally{
-			request.getRequestDispatcher("cadPaciente.jsp").forward(request, response);
+			
 		}
+		
 	}
 	
-	private static void inserirPaciente(String nome, String cpf, String endereco, String bairro, String cidade, String estado, String login, String senha){
+	private static void inserirPaciente(String nome, String cpf, String endereco, String bairro, String cidade, String estado, String login, String senha,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		paciente pac = new paciente();
 		
 		 pac.setNome(nome);
@@ -87,7 +99,9 @@ public class cadPaciente extends HttpServlet {
 		 pac.setLogin(login);
 		 pac.setSenha(senha);
 
-		 Model.Cadastro.Inserir(pac);
+		 if(Model.Cadastro.Inserir(pac)){
+			 request.getRequestDispatcher("cadPaciente.jsp").forward(request, response); 
+		 }
 		 
 	}
 	
